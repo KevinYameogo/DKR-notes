@@ -143,3 +143,9 @@ To build, ship and run containers, we need a **_container runtime engine_** be i
 - Docker is the most popular container engine
 
 It comes in Community Edition (CE) which is free and a paid Enterprise Edition (EE)
+
+# Docker Containers - From a Dockerfile to an Application
+
+Starting with a Dockerfile, we can build a container image that can be used to consistently run an application across different environments.
+
+Container Image can be used mutiple times
