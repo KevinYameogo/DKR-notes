@@ -358,6 +358,40 @@ docker create --name my-container ubuntu:20.04 --> Creates a container where its
 
 ## Docker start
 
-```python
-name
-```
+Syntax: docker start [OPTIONS] CONTAINER [CONTAINER...]
+
+Start an already created container that is not running.
+
+CONTAINER refers to the name or ID of the container you want to start.
+
+docker start my-container -> Start the specified container (by name).
+
+docker start abc1234 -> Start the specified container (by ID).
+
+docker start container1 container2 ... -> Start multiple containers at once.
+
+## Docker stop
+
+Syntax: docker stop [OPTIONS] CONTAINER [CONTAINER...]
+
+Stop a running Docker container gracefully.
+
+f the process doesn't terminate within a certain timeout period (by default 10 seconds), it will be forcefully stopped.
+
+docker stop my-container -> Stop the container named my-container
+
+docker stop -t 30 my-container -> Stop the container named my-container and allow it 30 seconds to stop gracefully.
+
+docker stop container1 container2
+
+## A container is a software process
+
+Syntax : ps [OPTIONS]
+
+ps a -> Show processes for all users (not just yours)
+
+ps -A -> Show all processes
+
+ps x -> Show processes not attached to a terminal (e.g., background services)
+
+ps u -> Show process owner (user) and display in user-friendly format
