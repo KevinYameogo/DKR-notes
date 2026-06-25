@@ -149,3 +149,215 @@ It comes in Community Edition (CE) which is free and a paid Enterprise Edition (
 Starting with a Dockerfile, we can build a container image that can be used to consistently run an application across different environments.
 
 Container Image can be used mutiple times
+
+![](/public/Screenshot%202026-06-22%20at%203.02.40 PM.png)
+
+- We can run containers on VMs
+
+![](/public/Screenshot%202026-06-22%20at%203.25.19 PM.png)
+
+# Popular Container engines and runtimes
+
+Docker
+
+Linux containers – LXC (System Level containerization framework)
+
+Containerd – geared towards Kubernetes deployments
+
+CRI-O – geared towards Kubernetes deployments
+
+# Docker Architecture - Overview
+
+Docker is a software platform that simplifies the process of building, running, managing, and distributing applications using containers.
+
+Developed by Docker Inc.
+
+Docker is open source
+
+Docker virtualizes the host OS (containers use the same kernel)
+
+Applications run in containers as isolated environments
+
+There are two types of Docker Editions: docker-CE, docker EE
+
+# Docker client
+
+It enables developers/users to interact with Docker
+
+When you use docker commands, the docker client sends these commands to the Docker daemon (dockerd)
+
+# Docker Host
+
+The server or Virtual machine on which Docker Engine is installed
+
+Docker daemon(dockerd) is the heart of Docker.
+
+# Docker images
+
+Images are read-only binary templates used to build containers
+
+They contain the application code, libraries, and dependencies required to run an application
+
+# Docker Daemon
+
+- The Docker Daemon (dockerd) is the heart of Docker
+
+- It listens to Docker API requests (from the Docker client) and manages containers, images, networks, and volumes
+
+- It builds container images as requested by the client
+
+- It interfaces with docker registries to pull or publish images as requested by the client
+
+- It manages the lifecycle of the containers (start, stop, remove)
+
+# Docker Containers
+
+Containers are encapsulated environments in which you run applications
+
+A container is an instance of a Docker image
+
+A container runs as a process in an isolated environment
+
+It packages the application and its dependencies into a single executable unit
+
+# Docker Registries
+
+A Docker registry stores Docker images
+
+Docker Hub is the public registry that anyone can use
+
+When needed, the required images can be pulled from the configured registry
+
+Users can push their created images to the configured registry
+
+![](/public/Screenshot%202026-06-22%20at%206.43.32 PM.png)
+
+![](/public/Screenshot%202026-06-23%20at%206.21.18 PM.png)
+
+# Understanding How Docker Works
+
+Docker CLI
+
+- Docker CLI communicates with the Docker Daemon/server, dockerd
+
+dockerd.
+
+- dockerd processes the Docker API requests and utilizes containerd functionality to manage the container's lifecycle.
+
+Containerd
+
+- Manages containers, Storage, and Networking
+
+- Pushes and pulls images
+
+runC
+
+- Creates and runs containers.
+
+![](/public/Screenshot%202026-06-23%20at%206.39.16 PM.png)
+
+# IAM
+
+- Identity and Access Management
+
+- It is recommended to create a user through IAM and use it for day to day work
+
+- download .csv files for credentials or email it
+
+# Hands-on-Labs
+
+- Launch an AWS EC2 instance
+
+- Ubuntu Linux (wont cost a lot on AWS)
+
+# Launch an AWS ubuntu EC2 Instance - Steps
+
+Open the AWS console
+
+Launch a new Ubuntu EC2 instance (Virtual machine)
+
+Configure the security Group, Allow - All Traffic inbound
+
+Create roles first:
+
+- We will create a AEC2roleforssm first(we called the role: IAMDocker)
+
+- Without IAM role we cant create the VM
+
+- Attach IAM role to instance to be able to communite with SSM
+
+- Connect to Session Manager
+
+- Or connect to EC2 instance connect
+
+# Install docker on our EC2 instance
+
+https://docs.docker.com/engine/install/ubuntu/
+
+run : systemctl enable docker (it will start by itself after every reboot)
+
+- docker info
+
+- cd /var/lib/docker (dont touch anything here)
+
+- ls
+
+# Basic docker commands
+
+## docker pull
+
+docker = dockerd
+
+Syntax : docker pull [OPTIONS] IMAGE[:TAG|@DIGEST]
+
+Download a docker image from a registry (default is Docker Hub) :TAG Specific version
+
+ex:
+
+docker pull ubuntu -> Pulls the latest version of the image ubuntu
+
+docker pull ubuntu:20.04 -> Pulls version 20.04 of the image ubuntu
+
+docker pull --all-tags ubuntu -> Pulls all versions(tags) of the image ubuntu
+
+## docker images
+
+Syntax: docker images [OPTIONS]
+
+List the available Docker images on the local Docker host.
+
+docker images -> List all images on the local host.
+
+docker images -q -> List all the available image IDs.
+
+## docker ps
+
+Syntax: docker ps [OPTIONS]
+
+List the running containers on the Docker host.
+
+It provides detailed information about each container's status, including its ID, name, status, and more.
+
+docker ps -> List the running Docker containers on the system.
+
+docker ps -a (or --all) -> List all containers (both running and stopped).
+
+https://hub.docker.com/
+
+## Docker create
+
+Syntax: docker create [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+Create a container in a stopped state (does not start it).
+
+docker create --name my-container nginx -> Create a container where its name is my-container and the image is nginx.
+
+If the image is not available locally, it will attempt to download it from Docker Hub.
+
+docker create --name my-container ubuntu:20.04 --> Creates a container where its name is my-container and the image is ubuntu release 20.04.
+
+## Docker start
+
+```python
+name
+```
