@@ -395,3 +395,57 @@ ps -A -> Show all processes
 ps x -> Show processes not attached to a terminal (e.g., background services)
 
 ps u -> Show process owner (user) and display in user-friendly format
+
+ps aux | grep cont1
+
+## docker exec
+
+Syntax: docker exec [OPTIONS] CONTAINER COMMAND [ARG...]
+
+- Used to execute a command inside a running Docker container.
+
+- It can be used to interact with a container's file system, processes, and environment.
+
+docker exec my-container ls /usr/src/app
+
+Run the "ls" command inside the container my-container to list the contents of the /usr/src/app directory.
+
+Use it with non-interactive commands that do not expect user input like ls, cat, echo.
+
+## docker exec : -t Option
+
+docker exec [OPTIONS] CONTAINER COMMAND [ARG...]
+
+docker exec -t my-container ls /app
+
+This command allocates a terminal (tty) to run interactive commands (like bash) within the container.
+
+- The --tty (or -t) flag attaches a pseudo-TTY to the container.
+
+- Hence, you get access to the input and output features that TTY devices provide.
+
+## docker exec : -i
+
+docker exec -i my-container cat /etc/hostname
+
+i (or --interactive): It keeps the container's Stdin open.
+
+This allows you to send input (commands or else) to the container through the standard input.
+
+Usage Tip: Use it with interactive commands that expect user input like vim, bash, sh, or other applications that require input.
+
+## docker exec -it – Opening a Terminal Inside the Container.
+
+docker exec -it my-container /bin/bash
+
+The two flags (-i and -t) are frequently used together to bind the I/O streams of the container to a pseudo-terminal, creating an interactive terminal session.
+
+/bin/bash specifies the type of shell you want to use(options bash, sh, Zsh etc).
+
+docker exec -it my-container cat /etc/shells
+
+Use this specific command to find out exactly which shells are available for your container.
+
+docker rm cont1 will remove container (id works too)
+
+docker rmi [imageName] to remove images
