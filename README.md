@@ -449,3 +449,41 @@ Use this specific command to find out exactly which shells are available for you
 docker rm cont1 will remove container (id works too)
 
 docker rmi [imageName] to remove images
+
+## docker run
+
+Syntax: docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+Create and start a container from a specified image in a single step.
+
+docker run nginx -> Create and start a container using the latest nginx image
+
+docker run --name cont1 ubuntu:20.04 -> Create and start a container from the ubuntu:20.04 image and assign it a name cont1.
+
+docker run -d nginx -> Create and start a container from image nginx in the background.
+
+-d: detached mode
+
+## docker run -it options
+
+docker run -it ubuntu /bin/bash -> Create and run an Ubuntu container and open an interactive shell of type Bash.
+
+The container will run in interactive mode with a pseudo-TTY.
+
+The command will also enter the shell (will move to the container prompt).
+
+docker run -it ubuntu bash -> This will do the exact same thing if the bash shell is included in the container $PATH.
+
+![](/public/Screenshot%202026-06-25%20at%208.33.44 PM.png)
+
+## docker run --rm Options
+
+docker run --rm ubuntu echo "this will self-destruct" -> Create and run an Ubuntu container, echo the sentence "this will self-destruct", then delete the container.
+
+Use it for one-off containers such as testing (curl, ping, etc.).
+
+Do not use for long-term containers (websites, databases, etc.).
+
+docker run -it --rm ubuntu bash -> Create and run an Ubuntu container, open an interactive shell into the container.
+
+Behavior: Once the user exits from the shell, delete the container automatically.
