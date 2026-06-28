@@ -487,3 +487,49 @@ Do not use for long-term containers (websites, databases, etc.).
 docker run -it --rm ubuntu bash -> Create and run an Ubuntu container, open an interactive shell into the container.
 
 Behavior: Once the user exits from the shell, delete the container automatically.
+
+docker rm -f my-container -> stop and remove container even if it is running
+
+docker rmi -f my-image force remove image that has dependent containers create from it.
+
+docker rm cc3 (first 3 letter of container)
+
+## docker inspect
+
+Syntax: docker inspect [OPTIONS] OBJECT [OBJECT...]
+
+Use to retrieve detailed, low-level information about containers, images, volumes, or networks in JSON format.
+
+You can run docker inspect on both running and stopped containers.
+
+docker inspect my-container -> Returns: Detailed information about the container (name, ID, Network, Config...)
+
+docker inspect nginx:latest -> Returns: Information about the image named nginx with the latest tag, including: Image ID, Creation time and more.
+
+## docker logs
+
+Syntax : docker logs [OPTIONS] CONTAINER
+
+Use to retrieve the logs of a container.
+
+This can be helpful for troubleshooting, debugging, and monitoring the output of processes running in a container.
+
+docker logs my-container -> Returns: Print the logs of the container named my-container.
+
+docker logs -f my-container -> Returns: Display the logs and keep updating the terminal with new log messages as they are written.
+
+## docker --help
+
+Syntax: docker --help
+
+Description: Display the help documentation for Docker, including the list of available commands and their descriptions.
+
+docker run --help -> Description: List of available options and flags for the docker run command.
+
+## docker image prune
+
+Syntax: docker image prune [OPTIONS]
+
+Description: Remove unused docker images on the host to free up space.
+
+# Docker files
