@@ -533,3 +533,109 @@ Syntax: docker image prune [OPTIONS]
 Description: Remove unused docker images on the host to free up space.
 
 # Docker files
+
+Dockerfile is a text document that contains all the commands a user could use manually on the CLI to build an application
+
+Docker can build images automatically by reading the instructions from a Dockerfile
+
+The command "docker build" reads the instructions in a docker file and creates a docker image
+
+## Docker file strucuture - FROM
+
+The FROM instruction will set the base image for the Dockerfile
+
+Every Dockerfile instruction that follows FROM applies to this base image.
+
+Syntax : FROM <image>[:tag]
+
+Example: FROM ubuntu -> Pull the latest base Ubuntu image
+
+## Docker image layers
+
+The docker image consists of layers
+
+- Each layer maps to a docker instruction in the docker file
+
+![](/public/Screenshot%202026-06-27%20at%209.56.17 PM.png)
+
+## Docker file strucuture - RUN
+
+RUN - runs one or more commands
+
+The RUN instruction will execute any commands in a new image layer and commit the results.
+
+Syntax : RUN <command>
+
+RUN apt-get update
+
+RUN apt-get install –y vim
+
+## Optimizing Image Layers(Recommended)
+
+It is possible to perform multiple commands using multiple lines with a single RUN statement.
+
+This will result in a few image layers
+
+RUN apt-get update
+
+RUN apt-get install –y vim
+
+RUN apt-get update && apt-get install –y \ vim \ git
+
+Will add one layer in the resulting image - Recommend
+
+## Inspecting Image Layers - docker history command
+
+docker history < image name >
+
+use this command to display image layers and their details
+
+## Docker file strucuture - CMD (inside the container)
+
+CMD - specifies the default command to execute when a container starts.
+
+The instruction can provide a default executable, or it can omit the executable if an ENTRYPOINT instruction is specified.
+
+Unlike the RUN instruction, which executes commands during the image build process, CMD is only executed when a container is instantiated from the image.
+
+Syntax : ["executable","param1","param2"]
+
+CMD["python","app.py"] -> at container start, execute "python app.py"
+
+RUN is at build time(adds layers to images, used to install apps) and CMD at runtime(runs command inside container).
+
+## docker build command
+
+Syntax: docker build [OPTIONS] PATH | URL | -
+
+PATH: The build context — usually the current directory.
+
+OPTIONS: Flags you can pass to customize the build.
+
+Dockerfile: By default, Docker looks for a file named Dockerfile, but you can specify a different one.
+
+docker build -t myapp . (-t means tag)
+
+Explanation: Build the image myapp from the dockerfile in the current directory. The current directory is the build context.
+
+## docker build command - Different file name
+
+docker build -f files/test.txt -t image3 /imagefiles
+
+(-f here stands for file and -t tag(name))
+
+Build the image myapp from the test.txt file in the /files directory
+
+The /imagefiles directory is the build context (any build files need to be here)
+
+relative docker build -f /home/ubuntu/apps/imagefiles/test.txt -t image3 /home/ubuntu/build/contextfiles/app1
+
+The build context is needed so Docker can access things like:
+
+source code (app.py, package.json)
+
+config files
+
+dependencies
+
+anything you COPY or ADD in the Dockerfile
