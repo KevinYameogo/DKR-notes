@@ -639,3 +639,60 @@ config files
 dependencies
 
 anything you COPY or ADD in the Dockerfile
+
+//
+
+nano or vim a dockerfile
+
+cat Dockerfile
+
+control + k to delete a line in nano
+
+ex:
+FROM ubuntu:22.04
+RUN apt-get update
+RUN apt-get install -y vim
+RUN apt-get install -y git
+CMD ["echo", "a ubuntu container with vim and git installed"]
+
+-y means “yes automatically”, it auto-confirms prompts like “Do you want to continue? [Y/n]”
+
+## Docker File Structure - EXPOSE
+
+The EXPOSE instruction informs Docker that the container listens on the specified network ports at runtime.
+
+EXPOSE <port>
+
+EXPOSE 80 -> Exposes port 80 or http
+
+EXPOSE 80 443 -> Exposes ports 80 and 443 (HTTP and HTTPS)
+
+EXPOSE is informational only; it does not actually publish or expose the port or open it to the host
+
+You still need to publish the port(s)
+
+It is useful for tools that auto generate configurations (Docker Compose, Swarm, K8s)
+
+## Docker File Structure - COPY
+
+The COPY instruction copies new files or directories from <src> and adds them to the filesystem of the container at the path <dest>.
+
+It can copy files from the build context only (cannot copy files from anywhere)
+
+Syntax: COPY <src> <dest>
+
+COPY app/utils /app/code/utils
+
+# Copy only the 'app/utils' directory to /app/code/utils inside the image
+
+COPY app/main.py /app/code/
+
+# Copy just the app/main.py file into /app/code
+
+### map port 80 on the host to port 80 on the container:
+
+docker run -p 80:80 imageexp (doing publishing your self)
+
+0.0.0.0:80->80/tcp, [::]:80->80/tcp (first is ipv4 and second ipv6)
+
+http:(public ipdress):portNumber to see on the web
