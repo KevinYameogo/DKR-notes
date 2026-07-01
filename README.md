@@ -696,3 +696,44 @@ docker run -p 80:80 imageexp (doing publishing your self)
 0.0.0.0:80->80/tcp, [::]:80->80/tcp (first is ipv4 and second ipv6)
 
 http:(public ipdress):portNumber to see on the web
+
+# Docker Files - WORKDIR, ENV, LABEL Instructions
+
+## Docker File Structure - WORKDIR
+
+Syntax: Syntax : WORKDIR </path>
+
+WORKDIR is used to define the working directory of the docker container at any given time
+
+It creates the directory specified by “path” and runs all the following container commands (RUN, CMD, ADD, COPY..etc) into this directory
+
+WORKDIR /app -> "Create this directory /app in the image and any container when it is created from the image"
+
+This </path> is a container path, not a docker host path
+
+The </path> will be in the resulting image during build time and in the container during runtime
+
+![](/public/Screenshot%202026-06-30%20at%202.41.11 PM.png)
+
+## Docker File Structure - ENV
+
+The ENV instruction allows for setting environment variables for the Docker container.
+
+Syntax: ENV <key> <value>
+
+ENV name=DolfinED
+CMD ["echo", "$name"]
+
+Output: DolfinED
+
+![](/public/Screenshot%202026-06-30%20at%203.15.47 PM.png)
+
+## Docker File Structure - LABEL
+
+The LABEL instruction in Docker is a way to add metadata to an image.
+
+This metadata can include information about the image such as the author, version, description, environment, or other custom data.
+
+Syntax: Syntax : LABEL key="value"
+
+LABEL Owner="DolfinED Academy Team <team@support.dolfined.com>"
