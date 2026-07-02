@@ -807,3 +807,95 @@ Example:
 Docker Hub : docker push myapp myusername/myapp:latest
 
 Generic Registry : docker push registry.mycorp.com/devops/myapp:1.0.0
+
+compress: tar -czvf archive.tar.gz test.txt
+
+docker login -u princier77
+
+# Docker networking overview
+
+## Network Bridges - Overview
+
+A bridge is a data link-layer (OSI layer 2) physical or virtual device that forwards traffic between two or more network segments.
+
+## Docker Bridge Networks
+
+In Docker, a bridge network uses a software bridge to allow containers to communicate inside the docker host.
+
+By default, when you start Docker, a bridge (docker0) is created automatically.
+
+## Docker Network Modes (Drivers)
+
+Bridge (default) - The default network driver.
+
+Host - Remove network isolation between the container and the Docker host.
+
+None - Completely isolate a container from the host and other containers.
+
+Overlay - Overlay networks connect multiple Docker daemons together.
+
+Ipvlan - Ipvlan networks provide full control over both IPv4 and IPv6 addressing.
+
+Macvlan - Assign a MAC address to a container.Userdefined — Custom network
+
+## Bridge Driver / Mode
+
+Containers connected to the same bridge network can communicate.
+
+A bridge network isolates its containers from other containers on other bridges.
+
+Bridge networks apply within the same Docker host only.
+
+A container can connect to multiple bridge networks at the same time.
+
+![](/public/Screenshot%202026-07-02%20at%203.29.14 PM.png)
+
+## Docker Default Bridge (docker0)
+
+The default docker bridge network (docker0) IP subnet is 172.17.0.0/16.
+
+172.17.0.1 is the IP default gateway between bridge Docker0 and the Docker host.
+
+Unless otherwise specified, all newly created containers attach to Docker0.
+
+Each container created in bridge mode has an eth0 with an assigned IP address.
+
+A new bridge virtual interface (veth) is created with every running container.
+
+![](/public/Screenshot%202026-07-02%20at%203.39.52 PM.png)
+
+## Bridge Mode - Containers Outbound Connectivity To External Networks
+
+In bridge network mode, when a container communicates outbound with external networks, the Docker host performs Network Address Translation (NAT).
+
+The Docker host maintains NAT entries in IPtables.
+
+![](/public/Screenshot%202026-07-02%20at%203.46.54 PM.png)
+
+## Bridge Mode – Multiple Bridge Networks
+
+Multiple bridge networks can co-exist inside a docker host.
+
+We can create custom bridge networks as needed (aside from the default bridge).
+
+A bridge network isolates its containers from other containers on other bridges.
+
+![](/public/Screenshot%202026-07-02%20at%203.55.16 PM.png)
+
+# Docker networking commands
+
+ip a —> Display network interfaces and their associated IP addresses on a Linux-based system.
+
+docker network ls —> List all available networks.
+
+docker network create <name> —> Create a new network with a specific name.
+
+docker network create --subnet 10.0.0.0/16 <network-name> -> Create a new network with a custom subnet range.
+
+docker network inspect <network-name or ID> —> Inspect a docker network.
+
+docker run --network <network-name> <image-name> —> Run a new container and connect it to a Docker network.
+
+docker network connect <network-name> <container_name> —> Connect a running container to a Docker network.
+
+docker network disconnect <network-name> <container_name> —> Disconnect a running container from a Docker network (Does not work with none and host network modes).
