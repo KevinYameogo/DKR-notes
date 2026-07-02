@@ -737,3 +737,73 @@ This metadata can include information about the image such as the author, versio
 Syntax: Syntax : LABEL key="value"
 
 LABEL Owner="DolfinED Academy Team <team@support.dolfined.com>"
+
+# Docker images and Docker registry
+
+![](/public/Screenshot%202026-07-01%20at%208.07.03 PM.png)
+
+Docker registry- pushing images
+
+## Docker Image Naming Convention
+
+Docker Hub has a specific naming convention for Docker images that helps with organization, versioning, and discovery.
+
+[registry/][username_or_org/]repository[:tag]
+
+Registry: (Optional) the domain of the container registry – default to docker.io
+
+Username or organization: The name of the user or organization (required for non-official images only)
+
+Repository: the name of the image or the project
+
+Tag (Optional): The version – defaults to Latest if not included
+
+## Image Rename – docker tag Command
+
+The docker tag command is used to add a new name (or alias) to an existing Docker image (add a custom name to an image).
+
+Syntax : docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
+
+Example Given: docker tag python:3.10 my-python-app:latest
+
+## Docker Registry – docker tag Command
+
+Images must be correctly tagged with the intended registry & image name before they are pushed"
+
+Syntax : docker tag SOURCE_IMAGE REGISTRY_HOST/USERNAME/REPO:TAG
+
+docker tag myapp registry.mycorp.com/devops/myapp:1.0.0
+
+This will tag the image myapp with the name registry.mycorp.com/devops/myapp:1.0.0 in preparation to be pushed to the private registry registry.mycorp.com, under account devops, under repo/image myapp with the tag 1.0.0
+
+## Docker Registry – docker login Command
+
+You have to login to Docker Hub to push to a repository
+
+Syntax: docker login Registry_Host
+
+## DockerHub Registry – docker tag Command
+
+For Dockerhub, you do not need to specify the registry as it defaults to docker.io
+
+The local image name and the repo name can be the same (they do not have to)
+
+Syntax: docker tag LOCAL_IMAGE_NAME:tag USERNAME/REPO:TAG
+
+ex: docker tag myimage myusername/myapp:latest
+
+ex: docker tag myimage myusername/myapp:v1
+
+## Docker Registry – docker push Command
+
+docker push uploads a locally tagged image to a Docker registry (like Docker Hub, GitHub Container Registry, AWS ECR, etc.)
+
+Syntax : docker push [REGISTRY_HOST]/USERNAME/REPO:TAG
+
+[REGISTRY_HOST] is the Registry, USERNAME is the User/Account, and REPO is the Imag/Repo.
+
+Example:
+
+Docker Hub : docker push myapp myusername/myapp:latest
+
+Generic Registry : docker push registry.mycorp.com/devops/myapp:1.0.0
