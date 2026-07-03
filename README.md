@@ -980,3 +980,139 @@ It is not as common today.
 docker run -it --volumes-from cont1 ubuntu
 
 Create an ubuntu container and allow it to inherit all volume mounts from cont1
+
+# Persisting Data Using Bind Mounting
+
+Bind mounts may be stored anywhere in the host filesystem.
+
+It is used with docker run commands (not in a Dockerfile).
+
+Perfect for development and testing (container can directly access host files).
+
+## docker run Command & Bind Mounting Option
+
+docker run -v /home/user/project:/app myimage
+
+/app in the container is mapped directly to the host path /home/user/project
+
+docker run -v $(pwd):/app my-dev-image
+
+Any changes you make to files on your host (e.g., with VS Code or Vim) are immediately visible inside the container.
+
+docker run -v /home/user/nginx.conf:/etc/nginx/nginx.conf nginx
+
+Injecting a host-specific config into the container without rebuilding an image.
+
+## Docker Volumes and Bind Mounts
+
+Safer (Docker manages them)
+
+Less error-prone (no accidental host overwrite)
+
+Portable (no hard-coded paths)
+
+Easier to back up
+
+Better integrated with Docker tooling
+
+">>" used to append
+
+# Docker compose
+
+## Introduction To Docker Compose
+
+Docker compose can simultaneously create, start, stop, or delete multiple containers on the same docker host.
+
+## What Is Docker Compose
+
+Docker Compose is a tool that lets you define and manage multi-container Docker applications
+
+It allows you to define the entire environment (services, networks, volumes, dependencies, etc.) in a simple YAML file (docker-compose.yml)
+
+Using a single docker command, you can execute the YAML file to run a project of multiple containers (on a single docker host)
+
+Docker Compose can build the component images using their Dockerfiles or pull them from a registry
+
+## Docker compose file structure
+
+## Docker Compose File Structure - Services
+
+This section defines all the different containers we need to create:
+
+In the example, we have three services or containers: database, frontend, and backend.
+
+These names have local significance to Docker compose configuration only.
+
+## Docker Compose File Structure – Service Image
+
+For the database service (container), we need to create it from a mysql image (from DockerHub)
+
+This is why we added the image: mysql statement
+
+Docker Compose File Structure – Build:
+
+For the frontend service (container), we need docker compose to build the image from a file named Dockerfile available in the same directory as docker-compose.yml file
+
+This is why we added the build: . statement
+
+## Docker Compose File Structure – Build (cont.)
+
+For the backend service (container), we need docker compose to build the image from a file named fileconfig available in the /app directory
+
+This is why we added the build:
+
+The context: /usr/project/app defines the full path where the docker file is located
+
+## The dockerfile : fileconfig defines the file name to use
+
+Docker Compose File Structure – container_name
+We can use the container_name to define a name for the services (container)
+
+## Docker Compose File Structure – ports
+
+ports: defines the host-port:container-port mapping
+
+## Docker Compose File Structure – volumes (bind mount)
+
+The volumes: under a service is used to create a bind mount (HostPath) mapping between a hostPath and a containerPath
+
+## Docker Compose File Structure – volumes (named Volume)
+
+The volumes: can also be used to mount a named volume (volumeName) to a containerPath
+
+This requires the volume to be created separately as shown using the volumes: section
+
+## Docker Compose File Structure – volumes (Anonymous volume)
+
+The volumes: can be used to mount an anonymous volume to a service (container)
+
+In this case we do not need the volumes section outside the services
+
+![](/public/Screenshot%202026-07-03%20at%206.27.07 PM.png)
+![](/public/Screenshot%202026-07-03%20at%206.27.32 PM.png)
+
+# Docker compose commands
+
+docker compose build -> Builds the images for the services.
+
+docker compose run <service-name> -> Creates a specific service (container) included in the docker-compose.yml file.
+
+docker compose up -> Builds the images if they are not located locally and starts the containers.
+
+docker compose -f <file-name> up -> Specifies a different compose file, builds the images, and starts the containers.
+
+docker compose up -d -> Similar to 'docker compose up' but runs the containers in detached mode.
+
+docker compose down -> Stops and removes all containers created by ‘docker compose up’
+
+docker compose down --volumes -> Stops and removes all containers and volumes (named and anonymous) created by ‘docker compose up’
+
+docker compose down --remove-orphans -> Stops and removes all current Compose containers and any old (orphan) containers that are no longer referenced by Compose yaml file
+
+docker compose down --volumes --remove-orphans -> Does all the above combined
+
+## Docker Compose Network
+
+By default, Docker Compose sets up a bridge network for your app
+
+Each container for a service joins the default network and is reachable by other compose services (containers) on that network
