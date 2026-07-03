@@ -899,3 +899,84 @@ docker run --network <network-name> <image-name> —> Run a new container and co
 docker network connect <network-name> <container_name> —> Connect a running container to a Docker network.
 
 docker network disconnect <network-name> <container_name> —> Disconnect a running container from a Docker network (Does not work with none and host network modes).
+
+apt-get install -y iproute2
+
+# Persisting data in Docker
+
+### The need for persisting data in docker containers
+
+Data in a container is lost if a container is deleted
+
+# Persisting Data in Docker - Benefits
+
+Persist data (e.g., database files, logs)
+
+Share data between containers
+
+Separate app code from user data
+
+Avoid losing data when a container stops or is deleted
+
+The Two Common Ways to Persist Data in Docker Containers:
+
+Volumes
+
+Bind Mounting
+
+# Docker volumes
+
+Volumes are stored in the host filesystem in the Docker internal storage area which is managed by Docker.
+
+Each volume gets its own volume path as follows: /var/lib/docker/volumes/<volume-name>/\_data/
+
+Is isolated from container layers
+
+Persists independently of containers
+
+Is mounted into containers at runtime
+
+It allows data to survive container restarts, deletion, and image rebuilds
+
+# docker volume commands
+
+docker volume create <volume-name> — Create a new "named" docker volume
+
+docker volume ls — List existing docker volumes
+
+docker volume inspect <volume-name> — Show detailed info about a volume
+
+docker volume rm <volume-name> — Delete a docker volume
+
+-v [volume name]:[container directory]
+
+Launch a container with a volume attached
+
+docker run -v mydata:/app/data ubuntu
+
+Create an ubuntu container and a volume mydata.
+Mount the volume at the /app/data folder in the container
+
+-v [volume name]:[container directory]:ro
+
+Launch a container with a read-only volume attached
+
+docker run -v mydata:/app/data:ro ubuntu
+
+Create an ubuntu container and a volume mydata.
+Mount the volume at the /app/data folder in the container.
+The container has read only access to the mydata volume
+
+## Sharing Data Between Multiple Docker Containers
+
+The --volumes-from flag allows you to inherit all the volume mounts from another container.
+
+It is not as common today.
+
+--volumes-from container1
+
+--volumes-from container1:ro
+
+docker run -it --volumes-from cont1 ubuntu
+
+Create an ubuntu container and allow it to inherit all volume mounts from cont1
