@@ -1111,8 +1111,25 @@ docker compose down --remove-orphans -> Stops and removes all current Compose co
 
 docker compose down --volumes --remove-orphans -> Does all the above combined
 
+docker compose stop
+
+docker compose start
+
+docker compose ps
+
 ## Docker Compose Network
 
 By default, Docker Compose sets up a bridge network for your app
 
 Each container for a service joins the default network and is reachable by other compose services (containers) on that network
+
+## Deploy a website on Nginx using a dockerfile
+
+![](/public/Screenshot%202026-07-03%20at%207.37.13 PM.png)
+![](/public/Screenshot%202026-07-03%20at%207.37.38 PM.png)
+
+https://github.com/DolfinED-HoLabs/Docker-Capstone-Project1
+
+# Project
+
+Clone github repo

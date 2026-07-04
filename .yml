@@ -1,0 +1,6 @@
+services:
+  web:
+    container_name: princier
+    ports:
+      - "8080:80"
+    image: nginx
